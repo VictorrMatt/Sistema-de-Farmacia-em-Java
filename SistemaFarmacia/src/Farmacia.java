@@ -20,9 +20,22 @@ import java.util.Scanner;
 public class Farmacia {
     public static void main (String args[]) {
         // Declaração de variaveis
+        int escolha = 0;
         int escolha_sessao = 0;
         int escolha_cliente = 0;
         int escolha_funcionario = 0;
+        int tamanho = 100;
+        String usuario = null;
+        String senha = null;
+        boolean cadastrado = false;
+
+
+        // Vetores
+        String usuarios[] = new String[tamanho]; // Nome dos clientes registrados
+        String enderecos[] = new String[tamanho]; // Endereço dos clientes registrados
+        String telefones[] = new String[tamanho]; // Telefone dos clientes registrados
+        String idades[] = new String[tamanho]; // Idade dos clientes registrados
+        String senhas[] = new String[tamanho]; // Senha dos clientes registrados
 
         Scanner caractere = new Scanner(System.in);
         Scanner inteiro = new Scanner(System.in);
@@ -52,7 +65,71 @@ public class Farmacia {
 
                         switch (escolha_cliente) {
                             case 1: // Cadastrar / Logar
-                                break;
+                                while (true) {
+                                    cadastrado = false; // Reiniciando variavel
+                                    System.out.println("\nPOR FAVOR, nos informe os seus DADOS.");
+
+                                    // Entrada do usuario com filtragem do dado
+                                    usuario = " ";
+                                    while (usuario.length() <= 3) {
+                                        System.out.print("Usuario: ");
+                                        usuario = caractere.nextLine();
+
+                                        if (usuario.length() <= 3) {
+                                            System.out.println("AVISO, USUARIOS devem conter 3 CARACTERES ou MAIS!");
+                                        }
+                                    }
+
+                                    // Entrada da senha com filtragem do dado
+                                    senha = " ";
+                                    while (senha.length() <= 3) {
+                                        System.out.print("Senha: ");
+                                        senha = caractere.nextLine();
+
+                                        if (senha.length() <= 3) {
+                                            System.out.println("AVISO, SENHAS devem conter 3 CARACTERES ou MAIS!");
+                                        }
+                                    }
+
+                                    // Verificando se dados constam no sistema
+                                    for (int c = 0; c < tamanho; c++) {
+                                        if (usuario.equals(usuarios[c]) && senha.equals(senhas[c])) {
+                                            cadastrado = true;
+                                        }
+                                    }
+
+                                    // Feedback para estado do cadastro
+                                    if (cadastrado == false) {
+                                        System.out.println("\nDesculpe, mas NAO ENCONTRAMOS a sua CONTA.");
+
+                                        // CADASTRO DO USUARIO
+                                        System.out.println("Deseja CADASTRAR os seguintes DADOS no SISTEMA?");
+                                        System.out.println("-------------------------------------------------");
+                                        System.out.println("USUARIO: " + usuario + "\nSENHA: " + senha); // Dados do usuario
+                                        System.out.println("-------------------------------------------------");
+                                        escolha = 0;
+                                        System.out.print(" 1 -> SIM, CADASTRAR\n 2 -> NAO, DIGITAR NOVAMENTE\n 3 -> VOLTAR ao MENU\nEscolha: ");
+                                        escolha = inteiro.nextInt();
+
+                                        switch (escolha) {
+                                            case 1:
+                                                cadastrado = true;
+                                                usuarios[0] = usuario;
+                                                senhas[0] = senha;
+                                                System.out.println("CADASTRADO com SUCESSO!");
+                                                break;
+
+                                            case 2:
+                                                break;
+                                        }
+                                        break;
+                                    } else {
+                                        System.out.println("-------------------------------------------------");
+                                        System.out.println("Ola " + usuario + ", Seja bem vindo de volta!");
+                                        System.out.println("-------------------------------------------------");
+                                        break;
+                                    }
+                                }
 
                             case 2: // Produtos
                                 break;
