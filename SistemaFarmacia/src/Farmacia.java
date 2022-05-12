@@ -29,7 +29,6 @@ public class Farmacia {
         String senha = null;
         boolean cadastrado = false;
 
-
         // Vetores
         String usuarios[] = new String[tamanho]; // Nome dos clientes registrados
         String enderecos[] = new String[tamanho]; // Endereço dos clientes registrados
@@ -72,7 +71,7 @@ public class Farmacia {
                                     // Entrada do usuario com filtragem do dado
                                     usuario = " ";
                                     while (usuario.length() <= 3) {
-                                        System.out.print("Usuario: ");
+                                        System.out.print("USUARIO: ");
                                         usuario = caractere.nextLine();
 
                                         if (usuario.length() <= 3) {
@@ -83,7 +82,7 @@ public class Farmacia {
                                     // Entrada da senha com filtragem do dado
                                     senha = " ";
                                     while (senha.length() <= 3) {
-                                        System.out.print("Senha: ");
+                                        System.out.print("SENHA: ");
                                         senha = caractere.nextLine();
 
                                         if (senha.length() <= 3) {
@@ -100,12 +99,10 @@ public class Farmacia {
 
                                     // Feedback para estado do cadastro
                                     if (cadastrado == false) {
-                                        System.out.println("\nDesculpe, mas NAO ENCONTRAMOS a sua CONTA.");
-
                                         // CADASTRO DO USUARIO
-                                        System.out.println("Deseja CADASTRAR os seguintes DADOS no SISTEMA?");
+                                        System.out.println("\nDeseja CADASTRAR os seguintes DADOS no SISTEMA?");
                                         System.out.println("-------------------------------------------------");
-                                        System.out.println("USUARIO: " + usuario + "\nSENHA: " + senha); // Dados do usuario
+                                        System.out.println("  USUARIO: " + usuario + "\t\t|\t\t\tSENHA: " + senha); // Dados do usuario
                                         System.out.println("-------------------------------------------------");
                                         escolha = 0;
                                         System.out.print(" 1 -> SIM, CADASTRAR\n 2 -> NAO, DIGITAR NOVAMENTE\n 3 -> VOLTAR ao MENU\nEscolha: ");
@@ -113,10 +110,11 @@ public class Farmacia {
 
                                         switch (escolha) {
                                             case 1:
-                                                cadastrado = true;
                                                 usuarios[0] = usuario;
                                                 senhas[0] = senha;
-                                                System.out.println("CADASTRADO com SUCESSO!");
+                                                System.out.println("-------------------------------------------------");
+                                                System.out.println("\t\t   == CADASTRADO com SUCESSO! ==");
+                                                cadastrado = true;
                                                 break;
 
                                             case 2:
@@ -124,9 +122,8 @@ public class Farmacia {
                                         }
                                         break;
                                     } else {
-                                        System.out.println("-------------------------------------------------");
-                                        System.out.println("Ola " + usuario + ", Seja bem vindo de volta!");
-                                        System.out.println("-------------------------------------------------");
+                                        System.out.println("\n-------------------------------------------------");
+                                        System.out.println("\t   Ola " + usuario + ", Seja BEM VINDO de VOLTA!");
                                         break;
                                     }
                                 }
@@ -170,6 +167,7 @@ public class Farmacia {
                     break;
             }
         } while (escolha_sessao != 3);
-        System.out.println("AGRADECIDOS por CONFIAR no NOSSO SISTEMA!"); // Despedidas
+        System.out.println("\n-------------------------------------------------");
+        System.out.println("    AGRADECIDOS por CONFIAR no NOSSO SISTEMA!"); // Despedidas
     }
 }
