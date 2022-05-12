@@ -147,7 +147,7 @@ public class Farmacia {
                 case 2:
                     do {
                         System.out.println("\nDigite o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
-                        System.out.print(" 1 -> ADICIONAR\n 2 -> EDITAR o PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> LUCRO TOTAL\n 5 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
+                        System.out.print(" 1 -> ADICIONAR\n 2 -> EDITAR o NOME / PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> LUCRO TOTAL\n 5 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
                         escolha_funcionario = inteiro.nextInt(); // Entrada do funcionario
 
                         switch (escolha_funcionario) {
