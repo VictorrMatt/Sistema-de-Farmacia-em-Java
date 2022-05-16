@@ -24,12 +24,14 @@ public class Farmacia {
         float entrada_precos[] = new float[n];
         int resposta_funcionario = 0;
         int i = 0;
+        int alterar_preco;
 
         // Vetores referentes aos usuarios
         String usuarios[] = new String[tamanho]; // Nome dos clientes registrados
         String senhas[] = new String[tamanho]; // Senha dos clientes registrados
         String telefones[] = new String[tamanho]; // Telefone dos clientes registrados
         String idades[] = new String[tamanho]; // Idade dos clientes registrados
+        int escolha_remedio[] = new int[tamanho];
         //endereco dos cadastrados
         String cidades[] = new String[tamanho]; // Cidade dos clientes registrados
         String estados[] = new String[tamanho]; // Estado dos clientes cadastrados
@@ -39,6 +41,8 @@ public class Farmacia {
         String remedios[] = new String[tamanho]; // Remedios da farmacia
         float preco[] = new float[tamanho]; // Preco dos remedios
         int quantidade[] = new int[tamanho]; // Colocação dos remedios
+        String cupom[] = new String[tamanho];
+        float desconto[] = new float[tamanho];
 
         Scanner caractere = new Scanner(System.in);
         Scanner inteiro = new Scanner(System.in);
@@ -144,20 +148,23 @@ public class Farmacia {
                                             continue;
                                         }
                                         System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
+                                        System.out.print("-> ");
+                                        escolha_remedio[i] = inteiro.nextInt();
+
                                 }
                                 break;
 
                             case 3: // Sobre nós
                                 break;
                         }
-                    } while (escolha_cliente != 4);
+                    } while (escolha_cliente != 5);
                     break;
 
                 // Funcionario
                 case 2:
                     do {
                         System.out.println("\nDIGITE o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
-                        System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> EDITAR o NOME / PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> LUCRO TOTAL\n 5 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
+                        System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> ALTERAR PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> Criar descontos \n 5 -> LUCRO TOTAL \n6 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
                         escolha_funcionario = inteiro.nextInt(); // Entrada do funcionario
 
                         switch (escolha_funcionario) {
@@ -185,20 +192,66 @@ public class Farmacia {
                                 break;
 
                             case 2: // Editar o preço dos produtos
+
+                                System.out.println("Qual produto voce quer alterar o preco?");
+
+                                System.out.println("\nProdutos | Preco");
+                                System.out.println("-------------------------------------------------");
+
+                                for (i = 0; i < tamanho; i++) {
+                                    if (entrada_remedios[i] == null) {
+                                        continue;
+                                    }
+                                    System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
+                                    System.out.print("-> ");
+                                    alterar_preco = inteiro.nextInt();
+
+                                    System.out.println("Novo preco do "+ entrada_remedios[i] + ": ");
+                                    entrada_precos[i] = real.nextFloat();
+
+                                }
+                                System.out.println("Preco do"+entrada_remedios+" alterado!!");
                                 break;
 
                             case 3: // Acesso ao cadastro dos clientes
                                 System.out.println("");
                                 break;
 
-                            case 4: // Lucro total
+                            case 4://adicionar descontos
+
+
+                                System.out.print("\nQUANTOS CUPONS voce deseja ADICIONAR? ");
+                                tamanho = inteiro.nextInt();
+                                for (i = 0; i < tamanho; i++) {
+                                    System.out.println("\nDigite o nome do "+ i +"º desconto");
+                                    System.out.println("-------------------------------------------------");
+                                    System.out.print("-> ");
+                                    cupom[i] = caractere.nextLine();
+
+                                    System.out.print("Quanto de desconto o cupom '"+cupom[i]+"' terá?");
+                                    System.out.print("->");
+                                    desconto[i] = real.nextFloat();
+                                }
+
+                                // Mostrando produtos
+                                for (i = 0; i < tamanho; i++) {
+                                    if (i == 0) {
+                                        System.out.println("\n\t\t- O cupom '" + cupom[i] + "' com R$" + desconto[i] + " de desconto foi ADICIONADO! -");
+                                    } else {
+                                        System.out.println("\t\t- O cupom '" + cupom[i] + "' com R$" + desconto[i] + " de desconto foi ADICIONADO! -");
+                                    }
+                                }
+                                break;
+
+                            case 5: // Lucro total
                                 break;
                         }
-                    } while (escolha_funcionario != 5);
+                    } while (escolha_funcionario != 6);
                     break;
             }
         } while (escolha_sessao != 3);
         System.out.println("\n-------------------------------------------------");
         System.out.println("    AGRADECIDOS por CONFIAR no NOSSO SISTEMA!"); // Despedidas
+        System.out.println("\n\n  ==Por Victor Mateus e Luan do Nascimeto==");
     }
 }
