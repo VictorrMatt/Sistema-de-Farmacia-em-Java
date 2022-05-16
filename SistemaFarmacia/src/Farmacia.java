@@ -1,30 +1,13 @@
-/*
- - CLIENTE
-    Cadastro para cliente: nome, endereço, telefone e idade
-    Adicionar remedios ao carrinho e escolher cupom de desconto
-
- - FUNCIONARIO
-    Editar o preço dos produtos
-    Adicionar produtos
-    Ter acesso ao cadastro do cliente
-
- - IMPLEMENTAR
-    Cadastro / Login
-    Produtos
-    Sobre nós
-    Carrinho
-*/
-
 import java.util.Scanner;
 import java.lang.*;
 
 public class Farmacia {
-    public static void main (String args[]) {
+    public static void main(String args[]) {
         // Declaração de variaveis
         int escolha = 0;
         int escolha_sessao = 0;
         int escolha_cliente = 0;
-        int escolha_funcionario = 0;
+        int  escolha_funcionario = 0;
         int tamanho = 100;
         String usuario = null;
         String senha = null;
@@ -33,14 +16,14 @@ public class Farmacia {
         String estado = null;
         String bairro = null;
         String rua = null;
-        boolean cadastrado = false;
-        int n=100;
-        String r[] = new String[n];
-        float p[] = new float[n];
-        int resp_func;
-        int i=0;
-
-
+        boolean cadastrado = true;
+        boolean entrada = true;
+        boolean cadastro = false;
+        int n = 100;
+        String entrada_remedios[] = new String[n];
+        float entrada_precos[] = new float[n];
+        int resposta_funcionario = 0;
+        int i = 0;
 
         // Vetores referentes aos usuarios
         String usuarios[] = new String[tamanho]; // Nome dos clientes registrados
@@ -55,7 +38,7 @@ public class Farmacia {
         //vetores referentes a farmacia
         String remedios[] = new String[tamanho]; // Remedios da farmacia
         float preco[] = new float[tamanho]; // Preco dos remedios
-        int quant[] = new int[tamanho]; // Colocação dos remedios
+        int quantidade[] = new int[tamanho]; // Colocação dos remedios
 
         Scanner caractere = new Scanner(System.in);
         Scanner inteiro = new Scanner(System.in);
@@ -68,9 +51,9 @@ public class Farmacia {
         do {
             // Mostrando prints situacionais
             if (escolha_sessao == 0) {
-                System.out.println("Digite o NUMERO que corresponde ao seu ESTADO.");
+                System.out.println("DIGITE o NUMERO que corresponde ao seu ESTADO.");
             } else {
-                System.out.println("\nDigite o NUMERO que corresponde ao seu ESTADO.");
+                System.out.println("\nDIGITE o NUMERO que corresponde ao seu ESTADO.");
             }
             System.out.print(" 1 -> Sou CLIENTE\n 2 -> Sou FUNCIONARIO\n 3 -> Quero SAIR do SISTEMA\nEscolha: ");
             escolha_sessao = inteiro.nextInt(); // Entrada do usuario
@@ -85,18 +68,20 @@ public class Farmacia {
 
                         switch (escolha_cliente) {
                             case 1: // Cadastrar / Logar
-                                while (true) {
-                                    cadastrado = false; // Reiniciando variavel
+                                cadastrado = false; // Reiniciando a variavel
+                                do {
                                     System.out.println("\nPOR FAVOR, nos informe os seus DADOS.");
 
                                     // Entrada do usuario com filtragem do dado
                                     usuario = " ";
-                                    while (usuario.length() <= 3) {
+                                    while (usuario.length() <= 3 || usuario.length() > 11) {
                                         System.out.print("USUARIO: ");
                                         usuario = caractere.nextLine();
 
                                         if (usuario.length() <= 3) {
                                             System.out.println("AVISO, USUARIOS devem conter 3 CARACTERES ou MAIS!");
+                                        } else if (usuario.length() > 11) {
+                                            System.out.println("AVISO, USUARIOS devem conter MENOS que 12 CARACTERES!");
                                         }
                                     }
 
@@ -111,70 +96,9 @@ public class Farmacia {
                                         }
                                     }
 
-                                    telefone = " ";
-                                    while (telefone.length() <= 8)
-                                    {
-                                        System.out.print("NUMERO: ");
-                                        telefone = caractere.nextLine();
-
-                                        if (telefone.length() <= 8)
-                                        {
-                                            System.out.println("AVISO!\n\nDados incorretos\nexemplo de numero\n(xx)91234-5678");
-                                        }
-                                    }
-
-                                    estado = " ";
-                                    while (estado.length() <= 2)
-                                    {
-                                        System.out.print("ESTADO: ");
-                                        estado = caractere.nextLine();
-
-                                        if (estado.length() <= 2)
-                                        {
-                                            System.out.println("AVISO!\n\nNumero de caracteres invalidos");
-                                        }
-                                    }
-
-                                    cidade = " ";
-                                    while (cidade.length() <= 1)
-                                    {
-                                        System.out.print("CIDADE: ");
-                                        cidade = caractere.nextLine();
-
-                                        if (cidade.length() <= 1)
-                                        {
-                                            System.out.println("AVISO!\n\nNumero de caracteres invalidos");
-                                        }
-                                    }
-
-                                    bairro= " ";
-                                    while (bairro.length() <= 1)
-                                    {
-                                        System.out.print("BAIRRO: ");
-                                        bairro = caractere.nextLine();
-
-                                        if (bairro.length() <= 1)
-                                        {
-                                            System.out.println("AVISO!\n\nNumero de caracteres invalidos");
-                                        }
-                                    }
-
-
-                                    rua= " ";
-                                    while (rua.length() <= 1)
-                                    {
-                                        System.out.print("RUA: ");
-                                        rua = caractere.nextLine();
-
-                                        if (rua.length() <= 1)
-                                        {
-                                            System.out.println("AVISO!\n\nNumero de caracteres invalidos");
-                                        }
-                                    }
-
                                     // Verificando se dados constam no sistema
                                     for (int c = 0; c < tamanho; c++) {
-                                        if (usuario.equals(usuarios[c]) && senha.equals(senhas[c]) && telefone.equals(telefones[c]) && cidade.equals(cidades[c]) && bairro.equals(bairros[c]) && rua.equals(ruas[c])) {
+                                        if (usuario.equals(usuarios[c]) && senha.equals(senhas[c])) {
                                             cadastrado = true;
                                         }
                                     }
@@ -182,45 +106,45 @@ public class Farmacia {
                                     // Feedback para estado do cadastro
                                     if (cadastrado == false) {
                                         // CADASTRO DO USUARIO
-                                        System.out.println("\nDeseja CADASTRAR os seguintes DADOS no SISTEMA?");
+                                        System.out.println("\n\t\tDeseja CADASTRAR-SE no SISTEMA?");
                                         System.out.println("-------------------------------------------------");
-                                        // Dados do usuario
 
-                                        System.out.println("  USUARIO: " + usuario + "\t|\tSENHA: " + senha + "\t|\tTELEFONE: " + telefones);
+                                        // Dados do usuario
+                                        System.out.println("  USUARIO: " + usuario + "\t|\tSENHA: " + senha);
                                         System.out.println("-------------------------------------------------");
-                                        System.out.println("ENDERECO:\n");
 
                                         escolha = 0;
                                         System.out.print(" 1 -> SIM, CADASTRAR\n 2 -> NAO, DIGITAR NOVAMENTE\n 3 -> VOLTAR ao MENU\nEscolha: ");
                                         escolha = inteiro.nextInt();
 
-                                        switch (escolha) {
-                                            case 1:
-                                                usuarios[0] = usuario;
-                                                senhas[0] = senha;
-                                                System.out.println("-------------------------------------------------");
-                                                System.out.println("\t\t   == CADASTRADO com SUCESSO! ==");
-                                                cadastrado = true;
-                                                break;
-
-                                            case 2:
-                                                break;
+                                        if (escolha == 1) {
+                                            usuarios[0] = usuario;
+                                            senhas[0] = senha;
+                                            System.out.println("-------------------------------------------------");
+                                            System.out.println("\t\t   == CADASTRADO com SUCESSO! ==");
+                                            cadastrado = true;
+                                            break;
+                                        } else if (escolha == 3) {
+                                            break;
                                         }
-                                        break;
                                     } else {
                                         System.out.println("\n-------------------------------------------------");
-                                        System.out.println("\t   Ola " + usuario + ", Seja BEM VINDO de VOLTA!");
+                                        System.out.println("    Ola " + usuario + ", Seja BEM VINDO de VOLTA!");
                                         break;
                                     }
-                                }
+                                } while (cadastrado == false);
+                                break;
 
                             case 2: // Produtos
-                                System.out.println("Produtos--|||--Preco---|||---Desconto-----\n");
-                                for(i=0; i<tamanho; i++) {
-                                    System.out.println((i+1) + "- "+r[i] +" R$" + p[i]);
+                                System.out.println("\nProdutos | Preco");
+                                System.out.println("-------------------------------------------------");
 
+                                for (i = 0; i < tamanho; i++) {
+                                        if (entrada_remedios[i] == null) {
+                                            continue;
+                                        }
+                                        System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
                                 }
-                                System.out.print("\n----------------------------------------------------------");
                                 break;
 
                             case 3: // Sobre nós
@@ -232,24 +156,31 @@ public class Farmacia {
                 // Funcionario
                 case 2:
                     do {
-                        System.out.println("\nDigite o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
+                        System.out.println("\nDIGITE o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
                         System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> EDITAR o NOME / PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> LUCRO TOTAL\n 5 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
                         escolha_funcionario = inteiro.nextInt(); // Entrada do funcionario
 
                         switch (escolha_funcionario) {
                             case 1: // adicionar remedios na farmacia
-
-                                System.out.println("Quantos produtos voce deseja adicionar?");
+                                System.out.print("\nQUANTOS PRODUTOS voce deseja ADICIONAR? ");
                                 tamanho = inteiro.nextInt();
-                                for(i=0; i<tamanho; i++) {
-                                    System.out.println("Nome do remedio:");
-                                    r[i] = caractere.nextLine();
+                                for (i = 0; i < tamanho; i++) {
+                                    System.out.println("\nPRODUTO N - " + (i + 1));
+                                    System.out.println("-------------------------------------------------");
+                                    System.out.print("NOME do REMEDIO: ");
+                                    entrada_remedios[i] = caractere.nextLine();
 
-                                    System.out.println("Preco do " + r[i]);
-                                    p[i] = real.nextFloat();
+                                    System.out.print("PRECO do " + entrada_remedios[i] + ": ");
+                                    entrada_precos[i] = real.nextFloat();
                                 }
-                                for(i=0; i<tamanho; i++) {
-                                    System.out.println(r[i] +" R$" + p[i]+"\nFoi adicionado");
+
+                                // Mostrando produtos
+                                for (i = 0; i < tamanho; i++) {
+                                    if (i == 0) {
+                                        System.out.println("\n\t\t- " + entrada_remedios[i] + " R$" + entrada_precos[i] + " foi ADICIONADO(A)!" + " -");
+                                    } else {
+                                        System.out.println("\t\t- " + entrada_remedios[i] + " R$" + entrada_precos[i] + " foi ADICIONADO(A)!" + " -");
+                                    }
                                 }
                                 break;
 
@@ -270,4 +201,4 @@ public class Farmacia {
         System.out.println("\n-------------------------------------------------");
         System.out.println("    AGRADECIDOS por CONFIAR no NOSSO SISTEMA!"); // Despedidas
     }
-}	
+}
