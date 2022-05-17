@@ -25,6 +25,8 @@ public class Farmacia {
         int resposta_funcionario = 0;
         int i = 0;
         int alterar_preco;
+        int resposta_cliente;
+        int cupom_escolhido;
 
         // Vetores referentes aos usuarios
         String usuarios[] = new String[tamanho]; // Nome dos clientes registrados
@@ -43,6 +45,7 @@ public class Farmacia {
         int quantidade[] = new int[tamanho]; // Colocação dos remedios
         String cupom[] = new String[tamanho];
         float desconto[] = new float[tamanho];
+        float carrinho[] = new float[tamanho];
 
         Scanner caractere = new Scanner(System.in);
         Scanner inteiro = new Scanner(System.in);
@@ -143,17 +146,48 @@ public class Farmacia {
                                 System.out.println("\nProdutos | Preco");
                                 System.out.println("-------------------------------------------------");
 
+                                for (i = 0; i < tamanho; i++)
+                                {
+                                    System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
+                                }
                                 for (i = 0; i < tamanho; i++) {
-                                        if (entrada_remedios[i] == null) {
-                                            continue;
-                                        }
-                                        System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
-                                        System.out.print("-> ");
-                                        escolha_remedio[i] = inteiro.nextInt();
+                                    if (entrada_remedios[i] == null) {
+                                        continue;
+                                    }
+                                    System.out.print("-> ");
+                                    escolha_remedio[i] = inteiro.nextInt();
 
+                                    carrinho[i]=carrinho[i]+entrada_precos[i];
+
+                                    System.out.println("Preco total\n"+(carrinho[i]+1));
+
+                                    // Mostrando produtos
+                                    System.out.println("\n\t\t- " + escolha_remedio[i] + " R$" + entrada_precos[i] + " foi ADICIONADO(A)!" + " -");
+
+                                    }
+                                System.out.println("Deseja adicionar algum cupom?\n1-sim\n2-nao");
+                                resposta_cliente = inteiro.nextInt();
+                                if (resposta_cliente==1)
+                                {
+                                    for(i=0; i<tamanho; i++)
+                                    {
+                                        System.out.println((i + 1) + "- " + cupom[i] + " com R$" + desconto[i]);
+                                    }
+                                    for(i=0; i<tamanho; i++)
+                                    {
+
+                                        System.out.println("Qual cupom deseja adicionar?");
+                                        System.out.print("-> ");
+                                        cupom_escolhido = inteiro.nextInt();
+
+                                        entrada_precos[i] = entrada_precos[i] - desconto[i];
+                                    }
+
+                                }else if(resposta_cliente==2)
+                                {
+                                    System.out.println("---Finalizacao---");
                                 }
                                 break;
-
                             case 3: // Sobre nós
                                 break;
                         }
@@ -164,7 +198,7 @@ public class Farmacia {
                 case 2:
                     do {
                         System.out.println("\nDIGITE o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
-                        System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> ALTERAR PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> Criar descontos \n 5 -> LUCRO TOTAL \n6 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
+                        System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> ALTERAR PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> Criar descontos \n 5 -> LUCRO TOTAL \n 6 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
                         escolha_funcionario = inteiro.nextInt(); // Entrada do funcionario
 
                         switch (escolha_funcionario) {
@@ -223,12 +257,12 @@ public class Farmacia {
                                 System.out.print("\nQUANTOS CUPONS voce deseja ADICIONAR? ");
                                 tamanho = inteiro.nextInt();
                                 for (i = 0; i < tamanho; i++) {
-                                    System.out.println("\nDigite o nome do "+ i +"º desconto");
+                                    System.out.println("\nDigite o nome do desconto "+ (i+1));
                                     System.out.println("-------------------------------------------------");
                                     System.out.print("-> ");
                                     cupom[i] = caractere.nextLine();
 
-                                    System.out.print("Quanto de desconto o cupom '"+cupom[i]+"' terá?");
+                                    System.out.print("Quanto de desconto o cupom '"+cupom[i]+"' tera?");
                                     System.out.print("->");
                                     desconto[i] = real.nextFloat();
                                 }
