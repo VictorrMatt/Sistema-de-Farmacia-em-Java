@@ -26,7 +26,11 @@ public class Farmacia {
         int i = 0;
         int alterar_preco;
         int resposta_cliente;
+        int resposta_cliente2;
+        int resposta_cliente3;
         int cupom_escolhido;
+        int rodando=0;
+        int rodando2=0;
 
         // Vetores referentes aos usuarios
         String usuarios[] = new String[tamanho]; // Nome dos clientes registrados
@@ -70,7 +74,7 @@ public class Farmacia {
                 case 1:
                     do {
                         System.out.println("\nDigite o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
-                        System.out.print(" 1 -> CADASTRAR / LOGAR\n 2 -> LISTA de PRODUTOS\n 3 -> SOBRE NOS\n 4 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
+                        System.out.print(" 1 -> CADASTRAR / LOGAR\n 2 -> LISTA de PRODUTOS\n 3 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
                         escolha_cliente = inteiro.nextInt(); // Entrada do cliente
 
                         switch (escolha_cliente) {
@@ -143,62 +147,91 @@ public class Farmacia {
                                 break;
 
                             case 2: // Produtos
-                                System.out.println("\nProdutos | Preco");
-                                System.out.println("-------------------------------------------------");
+                                if(cadastrado) {
+                                    System.out.println("Seu carrinho: R$" + (carrinho[i]));
+                                    System.out.println("\nProdutos | Preco");
+                                    System.out.println("-------------------------------------------------");
 
-                                for (i = 0; i < tamanho; i++)
-                                {
-                                    System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
-                                }
-                                for (i = 0; i < tamanho; i++) {
-                                    if (entrada_remedios[i] == null) {
-                                        continue;
+
+                                    for (i = 0; i < tamanho; i++) {
+                                        System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
                                     }
-                                    System.out.print("-> ");
-                                    escolha_remedio[i] = inteiro.nextInt();
-
-                                    carrinho[i]=carrinho[i]+entrada_precos[i];
-
-                                    System.out.println("Preco total\n"+(carrinho[i]+1));
-
-                                    // Mostrando produtos
-                                    System.out.println("\n\t\t- " + escolha_remedio[i] + " R$" + entrada_precos[i] + " foi ADICIONADO(A)!" + " -");
-
-                                    }
-                                System.out.println("Deseja adicionar algum cupom?\n1-sim\n2-nao");
-                                resposta_cliente = inteiro.nextInt();
-                                if (resposta_cliente==1)
-                                {
-                                    for(i=0; i<tamanho; i++)
-                                    {
-                                        System.out.println((i + 1) + "- " + cupom[i] + " com R$" + desconto[i]);
-                                    }
-                                    for(i=0; i<tamanho; i++)
-                                    {
-
-                                        System.out.println("Qual cupom deseja adicionar?");
+                                    for (i = 0; i < tamanho; i++) {
+                                        if (entrada_remedios[i] == null) {
+                                            continue;
+                                        }
                                         System.out.print("-> ");
-                                        cupom_escolhido = inteiro.nextInt();
+                                        escolha_remedio[i] = inteiro.nextInt();
 
-                                        entrada_precos[i] = entrada_precos[i] - desconto[i];
+                                        carrinho[i] = carrinho[i] + entrada_precos[i];
+
+                                        System.out.println("Preco total\n" + (carrinho[i]));
+
+                                        // Mostrando produtos
+                                        System.out.println("\n\t\t- " + escolha_remedio[i] + " R$" + entrada_precos[i] + " foi ADICIONADO(A)!" + " -");
+
+                                        System.out.println("Deseja continuar comprando?\n1-sim\n2-nao");
+                                        resposta_cliente3 = inteiro.nextInt();
+
+                                        if (resposta_cliente3 == 2) {
+                                            break;
+                                        }
                                     }
+                                    System.out.println("Deseja adicionar algum cupom?\n1-sim\n2-nao");
+                                    resposta_cliente = inteiro.nextInt();
+                                    if (resposta_cliente == 1) {
+                                        for (i = 0; i < n; i++) {
+                                            System.out.println((i + 1) + "- " + cupom[i] + " com R$" + desconto[i]);
+                                        }
+                                        for (i = 0; i < n; i++) {
 
-                                }else if(resposta_cliente==2)
+                                            System.out.println("Qual cupom deseja adicionar?");
+                                            System.out.print("-> ");
+                                            cupom_escolhido = inteiro.nextInt();
+
+                                            entrada_precos[i] = entrada_precos[i] - desconto[i];
+
+                                            System.out.println("O cupom '" + cupom[i] + "' foi adicionado");
+                                            System.out.println("---Finalizacao---\n");
+                                            System.out.println("Deseja finalizar a compra?\n1-sim\n2-nao\n->");
+                                            resposta_cliente2 = inteiro.nextInt();
+
+                                            if (resposta_cliente2 == 1) {
+                                                System.out.println("---Compra finalizada!!---");
+                                                System.out.println("Preco total a pagar\n" + (entrada_precos[i] + 1));
+
+                                            } else if (resposta_cliente2 == 2) {
+                                                break;
+                                            }
+
+                                        }
+                                    } else if (resposta_cliente == 2) {
+                                        System.out.println("---Finalizacao---\n");
+                                        System.out.println("Deseja finalizar a compra?\n1-sim\n2-nao\n->");
+                                        resposta_cliente2 = inteiro.nextInt();
+
+                                        if (resposta_cliente2 == 1) {
+                                            System.out.println("---Compra finalizada!!---");
+                                            System.out.println("Preco total a pagar\n" + carrinho[i]);
+
+                                        } else if (resposta_cliente2 == 2) {
+                                            break;
+                                        }
+                                    }
+                                } else if(!cadastrado)
                                 {
-                                    System.out.println("---Finalizacao---");
+                                    System.out.println("Voce NAO ESTA CADASTRADO!!\nPor favor cadastre-se :)");
                                 }
-                                break;
-                            case 3: // Sobre nós
                                 break;
                         }
-                    } while (escolha_cliente != 5);
+                    } while (escolha_cliente != 3);
                     break;
 
                 // Funcionario
                 case 2:
                     do {
                         System.out.println("\nDIGITE o NUMERO que corresponde a sua ACAO DESEJADA."); // Instruções
-                        System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> ALTERAR PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> Criar descontos \n 5 -> LUCRO TOTAL \n 6 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
+                        System.out.print(" 1 -> ADICIONAR REMEDIOS\n 2 -> ALTERAR PRECO dos PRODUTOS\n 3 -> ACESSAR CADASTROS\n 4 -> Criar descontos \n 5 -> VOLTAR ao MENU PRINCIPAL \nEscolha: ");
                         escolha_funcionario = inteiro.nextInt(); // Entrada do funcionario
 
                         switch (escolha_funcionario) {
@@ -236,7 +269,7 @@ public class Farmacia {
                                     if (entrada_remedios[i] == null) {
                                         continue;
                                     }
-                                    System.out.println((i + 1) + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
+                                    System.out.println(i + "- " + entrada_remedios[i] + " R$" + entrada_precos[i]);
                                     System.out.print("-> ");
                                     alterar_preco = inteiro.nextInt();
 
@@ -255,9 +288,9 @@ public class Farmacia {
 
 
                                 System.out.print("\nQUANTOS CUPONS voce deseja ADICIONAR? ");
-                                tamanho = inteiro.nextInt();
-                                for (i = 0; i < tamanho; i++) {
-                                    System.out.println("\nDigite o nome do desconto "+ (i+1));
+                                n = inteiro.nextInt();
+                                for (i = 0; i < n; i++) {
+                                    System.out.println("\nDigite o nome do desconto "+ i);
                                     System.out.println("-------------------------------------------------");
                                     System.out.print("-> ");
                                     cupom[i] = caractere.nextLine();
@@ -267,8 +300,8 @@ public class Farmacia {
                                     desconto[i] = real.nextFloat();
                                 }
 
-                                // Mostrando produtos
-                                for (i = 0; i < tamanho; i++) {
+                                // Mostrando cupons adicionados
+                                for (i = 0; i < n; i++) {
                                     if (i == 0) {
                                         System.out.println("\n\t\t- O cupom '" + cupom[i] + "' com R$" + desconto[i] + " de desconto foi ADICIONADO! -");
                                     } else {
@@ -276,11 +309,8 @@ public class Farmacia {
                                     }
                                 }
                                 break;
-
-                            case 5: // Lucro total
-                                break;
                         }
-                    } while (escolha_funcionario != 6);
+                    } while (escolha_funcionario != 5);
                     break;
             }
         } while (escolha_sessao != 3);
